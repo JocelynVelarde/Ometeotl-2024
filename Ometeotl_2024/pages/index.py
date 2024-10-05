@@ -17,6 +17,7 @@ from ..views.adquisition_view import adquisition
 from ..components.notification import notification
 from ..components.card import card
 from .profile import ProfileState
+from ..backend.vision import Vision
 import datetime
 
 
@@ -65,11 +66,14 @@ def index() -> rx.Component:
             rx.flex(
                 notification("bell", "cyan", 12),
                 notification("message-square-text", "plum", 6),
+                rx.button("Click", onClick=Vision.backend_function()),
                 spacing="4",
                 width="100%",
                 wrap="nowrap",
                 justify="end",
+                
             ),
+            
             justify="between",
             align="center",
             width="100%",

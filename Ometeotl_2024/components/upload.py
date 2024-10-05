@@ -1,14 +1,16 @@
 import reflex as rx
 
-class ImageUploadComponent(rx.Component):
-    def render(self):
-        return rx.div(
-            rx.h1("Upload Image"),
-            rx.form(
-                rx.input(type="file", name="file"),
-                rx.button("Upload", type="submit"),
-                method="post",
-                action="/upload",
-                enctype="multipart/form-data"
-            )
-        )
+def ImageUploadComponent() -> rx.Component:
+    """The image upload component.
+
+    Returns:
+        The UI for the image upload component.
+    """
+    return rx.upload(
+        rx.text(
+            "Drag and drop files here or click to select files"
+        ),
+        id="my_upload",
+        border="1px dotted rgb(107,99,246)",
+        padding="5em",
+    )

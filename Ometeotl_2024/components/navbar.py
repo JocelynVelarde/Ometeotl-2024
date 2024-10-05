@@ -32,9 +32,9 @@ def menu_item(text: str, url: str) -> rx.Component:
                 ("Weather", menu_item_icon("sun")),
                 ("About", menu_item_icon("book-open")),
                 ("Profile", menu_item_icon("user")),
+                ("Farmer", menu_item_icon("tractor")),
                 ("Settings", menu_item_icon("settings")),
                 ("Crop", menu_item_icon("leaf")),
-                menu_item_icon("layout-dashboard"),
 
             ),
             rx.text(text, size="4", weight="regular"),
@@ -113,9 +113,9 @@ def menu_button() -> rx.Component:
         "/weather",
         "/about",
         "/profile",
-        "/crop",
+        "/farmer",
         "/settings",
-        
+        "/crop",
     ]
 
     # Get the decorated pages.

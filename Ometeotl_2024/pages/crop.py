@@ -1,5 +1,5 @@
 from ..templates import template
-from ..components.upload import render as ImageUploadComponxent
+from Ometeotl_2024.components.upload import ImageUploadComponent
 import reflex as rx
 
 @template(route="/crop", title="Crop")
@@ -11,7 +11,7 @@ def crop() -> rx.Component:
     """
     return rx.vstack(
         rx.heading("Crop", size="5"),
-        ImageUploadComponxent(),
+        ImageUploadComponent(),
         spacing="8",
         width="100%",
     )

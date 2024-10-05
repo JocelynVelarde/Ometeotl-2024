@@ -34,6 +34,8 @@ def menu_item(text: str, url: str) -> rx.Component:
                 ("Profile", menu_item_icon("user")),
                 ("Farmer", menu_item_icon("tractor")),
                 ("Settings", menu_item_icon("settings")),
+                ("Fire", menu_item_icon("flame")),
+                ("Soil", menu_item_icon("sprout")),
                 ("Crop", menu_item_icon("leaf")),
 
             ),
@@ -115,6 +117,8 @@ def menu_button() -> rx.Component:
         "/profile",
         "/farmer",
         "/settings",
+        "/fire",
+        "/soil",
         "/crop",
     ]
 

@@ -82,6 +82,8 @@ def sidebar_item(text: str, url: str) -> rx.Component:
                 ("Profile", sidebar_item_icon("user")),
                 ("Crop", sidebar_item_icon("leaf")),
                 ("Farmer", sidebar_item_icon("tractor")),
+                ("Fire", sidebar_item_icon("flame")),
+                ("Soil", sidebar_item_icon("sprout")),
                 ("Settings", sidebar_item_icon("settings")),
             ),
             rx.text(text, size="3", weight="regular"),
@@ -139,6 +141,8 @@ def sidebar() -> rx.Component:
         "/profile",
         "/crop",
         "/farmer",
+        "/fire",
+        "/soil",
         "/settings",
     ]
 

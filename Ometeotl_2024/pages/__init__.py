@@ -5,3 +5,5 @@ from .about import about
 from .profile import profile
 from .crop import crop
 from .farmer import farmer
+from .fire import fire
+from .soil import soil

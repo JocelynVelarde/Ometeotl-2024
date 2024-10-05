@@ -188,8 +188,8 @@ def navbar() -> rx.Component:
         rx.hstack(
             # The logo.
             rx.color_mode_cond(
-                rx.image(src="/reflex_black.svg", height="1em"),
-                rx.image(src="/reflex_white.svg", height="1em"),
+                rx.image(src="/reflex_black.svg", height="6em"),
+                rx.image(src="/reflex_white.svg", height="6em"),
             ),
             rx.spacer(),
             menu_button(),

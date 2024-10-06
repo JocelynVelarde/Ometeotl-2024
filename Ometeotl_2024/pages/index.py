@@ -69,7 +69,9 @@ def index() -> rx.Component:
                 width="100%",
                 wrap="nowrap",
                 justify="end",
+                
             ),
+            
             justify="between",
             align="center",
             width="100%",

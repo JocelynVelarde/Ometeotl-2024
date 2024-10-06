@@ -1,77 +1,167 @@
+"""
+digitalTwin class is a class that represents a digital twin of a farm.
+
+Dimension 0: Ripeness of the plants.
+Dimension 1: Number of weeds.
+Dimension 2: Health of the plants.
+Dimension 3: Water status of the plants.
+Dimension 4: Diversity of the leaves.
+
+"""
+
+
+
+import numpy as np
 import random
-import json
-from datetime import datetime, timedelta
 
-from digitalTwin import Twin
+class Twin:
+    def __init__(self, name, size_x, size_y):
+        self.name = name
+        self.size_x = size_x
+        self.size_y = size_y
+        self.resolution_x = 5
+        self.resolution_y = 5
+        self.grid_x = size_x // self.resolution_x
+        self.grid_y = size_y // self.resolution_y
+        self.matrix = np.zeros((self.grid_y, self.grid_x, 5), dtype=np.float32)
+        self.total_blocks = self.grid_x * self.grid_y
+        self.test_size = self.total_blocks*.05
+        self.ilness_log ={
+            "Uncertain": 0,
+            "Overwatered": 0,
+            "Dry": 0,
+            "Variegated": 0,
+            "Healthy": 0
+        }
+        self.pest_log = { "Rust": 0,
+            "Fungus": 0,
+            "Pest": 0,
+            "Burning": 0}
 
+    def get_ripeness(self, plot_data):
 
-class Example:
-
-    def __init__(self, days, day_entries):
-        self.days = days
-        self.day_entries = day_entries
-        self.farm = Twin("Example Farm", 100, 50)
-
-    coordinates = [(0, 0), (0, 12), (1, 17), (2, 13), (2, 15), (3, 4), (3, 6), (3, 2), (7, 18), (8, 1)]
-
-    def generate_random_data(self, coordinates):
-        return {
-            "results": {
-                "coordinate": random.choice(coordinates),
-                "timestamp": (datetime.now() - timedelta(days=random.randint(0, 365))).strftime("%Y-%m-%d %H:%M:%S"),
-                "plot_data": {
-                    "freshripe": random.randint(5, 25),
-                    "freshunripe": random.randint(5, 25),
-                    "overripe": random.randint(5, 25),
-                    "ripe": random.randint(5, 85),
-                    "rotten": random.randint(5, 25),
-                    "unripe": random.randint(5, 75)
-                },
-                "weed_count": random.randint(5, 25),
-                "healthy_plants": random.randint(5, 85),
-                "unhealthy_plants": random.randint(5, 25),
-                "illnesses": {
-                    "Uncertain": random.randint(5, 25),
-                    "Overwatered": random.randint(5, random.randint(6, 30)),
-                    "Dry": random.randint(5, 25),
-                    "Variegated": random.randint(5, random.randint(6, 30)),
-                    "Healthy": random.randint(5, 75)
-                },
-                "pests": {
-                    "Rust": random.randint(5, 10),
-                    "Fungus": random.randint(5, 25),
-                    "Pest": random.randint(5, 40),
-                    "Burning": random.randint(5, 33)
-                },
-                "leaf_types": {
-                    "leaf_type_count": random.randint(1, 5)
-                }
-            }
+        ripeness_scores = {
+            "freshripe": 1.00,
+            "freshunripe": 0.75,
+            "ripe": 1.00,
+            "overripe": 1.25,
+            "rotten": 1.50,
+            "unripe": 0.50
         }
 
-
-    def time_analysis(self):
-
-        for i in range(self.days):
-            day_coordinates = self.farm.get_random_coordinates()
-            random_entries = [self.generate_random_data(day_coordinates) for _ in range(self.day_entries)]
-            for entry in random_entries:
-                self.farm.run_analysis(entry)
-            self.farm.average_values()
+        total_plants = 0
+        weighted_ripeness_sum = 0
 
 
+        for tag, count in plot_data.items():
+            ripeness_score = ripeness_scores.get(tag, 0)
+            weighted_ripeness_sum += ripeness_score * count
+            total_plants += count
 
 
-"""
+        if total_plants == 0:
+            return None
+        overall_health = weighted_ripeness_sum / total_plants
+
+        return overall_health
+
+    def get_weeds(self, weed_count):
+        return weed_count
+
+    def get_healthy_plants(self, healty_leaf_count, unhealthy_leaf_count):
+        if unhealthy_leaf_count == 0:
+            return 1
+        return healty_leaf_count / (healty_leaf_count + unhealthy_leaf_count)
+
+    def get_water(self, illness_result, pest_results):
+        self.ilness_log['Healthy'] += illness_result['Healthy']
+        self.ilness_log['Overwatered'] += illness_result['Overwatered']
+        self.ilness_log['Dry'] += illness_result['Dry']
+
+        self.pest_log['Rust'] += pest_results['Rust']
+        self.pest_log['Fungus'] += pest_results['Fungus']
+        self.pest_log['Pest'] += pest_results['Pest']
+        self.pest_log['Burning'] += pest_results['Burning']
+
+        healthy, overwatered, dry = illness_result['Healthy'], illness_result['Overwatered'], illness_result['Dry']
+
+        total = healthy + overwatered + dry
+
+        if total == 0:
+            return 1
+
+        healthy_ratio = healthy / total
+        overwatered_ratio = overwatered / total
+        dry_ratio = dry / total
+
+        if healthy_ratio >= overwatered_ratio and healthy_ratio >= dry_ratio:
+            return 1
+        elif dry_ratio > healthy_ratio and dry_ratio > overwatered_ratio:
+            return 0.5
+        else:
+            return 1.5
+
+    def get_leaf_types(self, leaf_types):
+        return leaf_types['leaf_type_count']
+
+    def get_random_coordinates(self):
+        rows, cols, dims = self.get_shape()
+        coordinates_set = set()
+
+        while len(coordinates_set) < self.test_size:
+            coord = (random.randint(0, rows - 1), random.randint(0, cols - 1))
+            coordinates_set.add(coord)
+
+        return  sorted(list(coordinates_set), key=lambda x: x[0])
+
+    def run_analysis(self, json_data):
+
+        data = json_data['results']
+
+        coordinate = tuple(data['coordinate'])
+
+        ripeness = self.get_ripeness(data['plot_data'])
+
+        weed_count = self.get_weeds(data['weed_count'])
+
+        healthy_plants = self.get_healthy_plants(data['healthy_plants'], data['unhealthy_plants'])
+
+        water_status = self.get_water(data['illnesses'], data['pests'])
+
+        leaf_diversity = self.get_leaf_types(data['leaf_types'])
 
 
-e = Example(30, 10)
-e.time_analysis()
-print(e.farm.get_dimension(0))
+        self.set_value(coordinate, 0, ripeness)
+        self.set_value(coordinate, 1, weed_count)
+        self.set_value(coordinate, 2, healthy_plants)
+        self.set_value(coordinate, 3, water_status)
+        self.set_value(coordinate, 4, leaf_diversity)
 
-#//this is for the logs that shall be passed to the LLM
-print(e.farm.ilness_log)
-print(e.farm.pest_log)
+    def get_matrix(self):
+            return self.matrix
+
+    def get_shape(self):
+        return self.matrix.shape
+
+    def set_value(self, coordinate, dimension, value):
+        cord = (*coordinate, dimension)
+        self.matrix[cord] += value
+
+    def average_values(self):
+        rows, cols, dims = self.get_shape()
+
+        for i in range(dims):
+            twod_matrix = self.matrix[:,:,i].copy()
+            zeros = np.zeros((rows, cols), dtype=np.float32)
+            zeros[0:-1, : ] =  zeros[0:-1, : ] + twod_matrix[0:-1, : ]
+            zeros[1:-1,:] = zeros[1:-1,:] + twod_matrix[1:-1,:]
+            zeros[:, 0:-1] = zeros[:, 0:-1] + twod_matrix[:, 0:-1]
+            zeros[:, 1:-1] = zeros[:, 1:-1]  + twod_matrix[:, 1:-1]
+            zeros = zeros / 4
+            self.matrix[:,:,i] = zeros
+
+    def get_dimension(self, dimension):
+        return self.matrix[: ,: ,dimension]
 
 
-"""
+

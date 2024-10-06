@@ -24,5 +24,5 @@ class WhatsappSender:
         return message.sid
     
 if __name__ == "__main__":
-    WhatsappSender.send_message("+5218111751674", "This is a custom test")
+    WhatsappSender.send_message("+528110517608", "This is a custom test")
     print("Message sent successfully!")

@@ -33,6 +33,6 @@ if uploaded_file is not None:
     
     image_rgb = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
     st.image(image_rgb, caption="Results", use_column_width=True)
-    st.write("Analysis complete")
+    st.success("Analysis complete")
 
 # Display the image

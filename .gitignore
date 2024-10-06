@@ -8,3 +8,5 @@ __pycache__/
 assets/external/
 venv/
 vision
+*.env
+test_imgs/

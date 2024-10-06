@@ -1,17 +1,12 @@
+import json
 import streamlit as st
 from algorithms.crop_analyzer import CropAnalyzer
 from algorithms.whatsapp import WhatsappSender
 import cv2
 import numpy as np
 from PIL import Image
-from datetime import datetime
 
-
-if 'phone_number' not in st.session_state:
-    with open("phone.txt", 'r') as file:
-        text = file.read()
-    st.session_state.phone_number = text
-
+from api.mongo_connection import get_all_data
 
 # Page configuration
 st.set_page_config(
@@ -77,7 +72,11 @@ if uploaded_file is not None:
     image_cv = cv2.cvtColor(image_np, cv2.COLOR_RGB2BGR)
     image, data = CropAnalyzer.analyze_image(image_cv, x1, y1)
     interpreted_info = CropAnalyzer.interpret_data(data)
-    # WhatsappSender.send_message(st.session_state.phone_number, interpreted_info)
+    decoded_data = json.loads(get_all_data('numberData', 'number'))
+
+    for entry in decoded_data:
+        phone_number = entry.get("phone_number")
+        WhatsappSender.send_message(phone_number, interpreted_info)
     
     st.success("Analysis complete, scroll down below to see the results.")
     st.divider()

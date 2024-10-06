@@ -76,13 +76,6 @@ location_df = pd.DataFrame({
 # Display the map with the point
 container.map(location_df, zoom=15)
 
-def send_message_all(message):
-
-    res = get_all_data("numberData", "number")
-    print(res)
-
-
-
 if selected_date:
     with st.container(border=True, key='vegetation_days'):
         st.subheader('🥬 Vegetation days')

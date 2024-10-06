@@ -1,6 +1,5 @@
 from inference_sdk import InferenceHTTPClient
 import os
-from dotenv import load_dotenv
 import json
 import streamlit as st
 from algorithms.gpt_analysis import *

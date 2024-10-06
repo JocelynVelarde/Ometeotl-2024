@@ -30,12 +30,12 @@ def fetch_pollen_warning(date: str):
 def fetch_land_usage(date: str):
     # https://api.meteomatics.com/2024-10-06T18:00:00Z/land_usage:idx/46,7.3_45.5,7.8:0.001,0.001/html 
     # # https://api.meteomatics.com/2024-10-06T18:00:00Z/is_in_shadow:idx/46,7.3_45.5,7.8:0.001,0.001/html   
-    api_url = f'https://api.meteomatics.com/2024-10-06T18:00:00Z/is_in_shadow:idx/46,7.3_45.5,7.8:0.001,0.001/png?access_token={token}'
+    api_url = f'https://api.meteomatics.com/2024-10-06T18:00:00Z/land_usage:idx/46,7.3_45.5,7.8:0.001,0.001/png?access_token={token}'
     try:
         response = requests.get(api_url)
         response.raise_for_status()
         st.image(response.content)
-        return "Image displayed"
+        return st.success("Land usage image displayed.")
     except requests.RequestException as e:
         return f"API request failed: {e}"
     

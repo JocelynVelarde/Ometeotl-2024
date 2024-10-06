@@ -68,13 +68,22 @@ def get_image_analysis(images, prompt):
 
     return output_message  
 
-def get_gpt_prompt_response(prompt):
+def get_gpt_prompt_response(prompt, system_message):
     headers = {
         "Content-Type": "application/json",
         "Authorization": f"Bearer {st.secrets['open_ai_key']}"
     }
 
     messages = [
+        {
+            "role": "system",
+            "content": [
+                {
+                    "type": "text",
+                    "text": system_message
+                }
+            ]
+        },
         {
             "role": "user",
             "content": [
@@ -96,6 +105,7 @@ def get_gpt_prompt_response(prompt):
     # Make the API request
     response = requests.post("https://api.openai.com/v1/chat/completions", headers=headers, json=payload)
     response_data = response.json()
+
 
     output_message = response_data['choices'][0]['message']['content']
 

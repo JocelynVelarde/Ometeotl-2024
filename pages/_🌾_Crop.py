@@ -4,6 +4,14 @@ from algorithms.whatsapp import WhatsappSender
 import cv2
 import numpy as np
 from PIL import Image
+from datetime import datetime
+
+
+if 'phone_number' not in st.session_state:
+    with open("phone.txt", 'r') as file:
+        text = file.read()
+    st.session_state.phone_number = text
+
 
 # Page configuration
 st.set_page_config(
@@ -47,11 +55,14 @@ if uploaded_file is not None:
     image_np = np.array(image_pil)
     image_cv = cv2.cvtColor(image_np, cv2.COLOR_RGB2BGR)
     image, data = CropAnalyzer.analyze_image(image_cv, 1, 2)
+    interpreted_info = CropAnalyzer.interpret_data(data)
+    # WhatsappSender.send_message(st.session_state.phone_number, interpreted_info)
     
-    WhatsappSender.send_message(st.phone_number, data)
-    
+    st.success("Analysis complete")
+    st.divider()
+    st.header("Results")
     #Handle data - funcion Rossi
     
     image_rgb = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
     st.image(image_rgb, caption="Results", use_column_width=True)
-    st.success("Analysis complete")
+    st.markdown(interpreted_info)

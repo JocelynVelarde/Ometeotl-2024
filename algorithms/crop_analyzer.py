@@ -3,7 +3,10 @@ import os
 from dotenv import load_dotenv
 import json
 import streamlit as st
+from algorithms.gpt_analysis import *
 import cv2
+from datetime import datetime
+
 
 
 colors = [
@@ -33,12 +36,18 @@ class CropAnalyzer:
     @classmethod
     def drawBbox(cls, image, x1, y1, x2, y2, label, color):
         text_color = (255, 255, 255)  # White color for text
-        cv2.rectangle(image, (x1, y1 + 5), (x2, y2), color, 2)
+        cv2.rectangle(image, (x1, y1 + 10), (x2, y2), color, 2)
         font, font_scale, thickness = cv2.FONT_HERSHEY_SIMPLEX, 0.9, 2
         text_size = cv2.getTextSize(label, font, font_scale, thickness)[0]
-        cv2.rectangle(image, (x1, y1 - text_size[1]), (x2, y1 + 5), color, -1)
-        cv2.putText(image, label, (x1, y1 + 5), font, font_scale, text_color, thickness)
+        cv2.rectangle(image, (x1, y1 - text_size[1] + 5), (x2, y1 + 10), color, -1)
+        cv2.putText(image, label, (x1, y1 + 10), font, font_scale, text_color, thickness)
         return image
+    
+    @classmethod
+    def interpret_data(cls, results):
+        prompt = results
+        system_message = "You will receive a json object with results of an image analysis that contains information about the healthy or unhealthy plants detected, illnessess, among other attributes. This image was taken by a farmer. Help the farmer by interpreting the results, summarizing them (very briefly), providing an explanation about the results and give any recommendations if necessary."
+        return get_gpt_prompt_response(prompt, system_message)
     
     @classmethod 
     def analyze_image(cls, image, cx, cy):
@@ -156,6 +165,7 @@ class CropAnalyzer:
         json_data = {
             "results": {
                 "coordinate": (cx, cy),
+                "timestamp": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
                 "plot_data": ripe_results,
                 "weed_count": weed_count,
                 "healthy_plants": healty_leaf_count,

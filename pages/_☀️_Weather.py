@@ -15,9 +15,9 @@ st.set_page_config(
 )
 
 lat, lon = get_location.get_latlon()
-location = get_location.get_location_by_ip()
+city, region, country = get_location.get_location_by_ip()
 
-st.title('Weather for ' + location)
+st.title(f'Weather for {city}, {region}, {country}')
 
 container = st.container(border=True)
 
@@ -101,7 +101,7 @@ if selected_date:
         data = fetch_snow_cover(date=selected_date)
         html(data, width=500, height=400)
     
-
+    
 
     with st.container(border=True, key='pollen_warning'):
         st.subheader('💐 Pollen warning')
@@ -121,6 +121,5 @@ if selected_date:
         st.write(data)
         data = fetch_open_water_body(date=selected_date)
         html(data, width=500, height=400)
-        log_data_type(data, 'land_usage')
 
 st.button('Refresh')

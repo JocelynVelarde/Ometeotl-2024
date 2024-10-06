@@ -1,3 +1,4 @@
 pandas==2.2.3
 plotly==5.24.1
 reflex==0.6.1
+streamlit-calendar==1.2.0

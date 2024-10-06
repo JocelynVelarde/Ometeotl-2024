@@ -1,6 +1,6 @@
 import streamlit as st
 import matplotlib.pyplot as plt
-from api.day_counts import fetch_vegetation_days, fetch_heating_days, fetch_extremely_hot_days
+from api.day_counts import fetch_vegetation_days, fetch_heating_days, fetch_extremely_hot_days, fetch_tropical_nights
 from streamlit.components.v1 import html
 from streamlit_calendar import calendar
 
@@ -62,6 +62,24 @@ if selected_date:
         st.write('This parameter returns the number of extremely hot days (days on which the maximum temperature at 2m exceeds 35°C) since the 1st of January.')
         data = fetch_extremely_hot_days(date=selected_date)
         html(data, width=500, height=400)
+
+with st.container(border=True, key='tropical_nights'):
+    st.subheader('🌴 Tropical nights')
+    st.write('This parameter returns the number of tropical nights (days for which the 24-hour minimum temperature was greater than 20°C) since the 1st of January.')
+    data = fetch_tropical_nights()
+    html(data, width=500, height=400)
+
+with st.container(border=True, key='frost_days'):
+    st.subheader('❄️ Frost days')
+    st.write('This parameter indicates the count of frost days, which are days when the temperature fell below 0 degrees Celsius, since the 1st of January. The count of frost days corresponds to the count of freezing days in the United States.')
+    data = fetch_frost_days()
+    html(data, width=500, height=400)
+
+with st.container(border=True, key='frost_days'):
+    st.subheader('❄️ Frost days')
+    st.write('This parameter indicates the count of frost days, which are days when the temperature fell below 0 degrees Celsius, since the 1st of January. The count of frost days corresponds to the count of freezing days in the United States.')
+    data = fetch_frost_days()
+    html(data, width=500, height=400)
 
 
 st.button('Refresh')

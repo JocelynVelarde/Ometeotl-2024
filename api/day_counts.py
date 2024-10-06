@@ -31,4 +31,13 @@ def fetch_extremely_hot_days(date: str):
         return response.content.decode("utf-8")
     except requests.RequestException as e:
         return f"API request failed: {e}"
+
+def fetch_tropical_nights():
+    api_url = "https://api.meteomatics.com/2024-10-06T00:00:00ZP35D:P1D/tropical_nights:d/" + lat + "," + lon + "/html?access_token=" + token
+    try:
+        response = requests.get(api_url)
+        response.raise_for_status() 
+        return response.content.decode("utf-8")
+    except requests.RequestException as e:
+        return f"API request failed: {e}"
     

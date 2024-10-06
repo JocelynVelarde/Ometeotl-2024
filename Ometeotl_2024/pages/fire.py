@@ -12,7 +12,7 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-client = MongoClient(uri=os.getenv("MONGO_URI"), server_api=ServerApi('1'))
+client = MongoClient(os.getenv("MONGO_URI"), server_api=ServerApi('1'))
 
 def insert_data(data :str, database: str, collection: str) -> str:
     try:

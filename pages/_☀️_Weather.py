@@ -10,7 +10,6 @@ st.set_page_config(
 )
 
 st.title('Weather widgets depending on your location')
-
 # Fetch data
 data = fetch_vegetation_days()
 html(data, width=500, height=400)

@@ -109,4 +109,4 @@ def get_gpt_prompt_response(prompt, system_message):
 
     output_message = response_data['choices'][0]['message']['content']
 
-    return output_message  
+    return output_message

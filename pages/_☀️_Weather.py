@@ -1,5 +1,3 @@
-import streamlit as st
-import matplotlib.pyplot as plt
 from api.day_counts import *
 from streamlit.components.v1 import html
 from api.atmospheric import *
@@ -8,7 +6,10 @@ from api.weather_params import *
 from api.health import *
 from streamlit_calendar import calendar
 from algorithms.gpt_analysis import get_gpt_prompt_response
+from algorithms.whatsapp import WhatsappSender
 
+import streamlit as st
+import matplotlib.pyplot as plt
 import api.location_fetcher as get_location
 import pandas as pd
 
@@ -60,7 +61,16 @@ if selected_date:
             res = fetch_vegetation_days_csv(date=selected_date)
             s = "Analyze the following csv data and provide a detailed analysis."
             st.write("#### Analysis")
-            st.write(get_gpt_prompt_response(prompt=s + res, system_message="Analyze the following csv data and provide a brief analysis in a single paragraph."),)
+            response = get_gpt_prompt_response(prompt=s + res, system_message="Analyze the following csv data and provide a brief analysis in a single paragraph. At the end write out an alert message for the most important thing analyzed. Write this alert message and start it with the word ‘ALERT’")
+            
+            if "ALERT" in response:
+                pre_alert_text = response.split("ALERT", 1)[0].strip()
+                alert_text = response.split("ALERT", 1)[1].strip()
+                
+                st.write(pre_alert_text)
+                st.write(f"**ALERT**: {alert_text}")
+
+                WhatsappSender.send_message("+528123319959", alert_text)
 
     with st.container(border=True, key='heating_days'):
         st.subheader('☀️ Heating days')

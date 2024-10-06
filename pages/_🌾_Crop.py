@@ -1,5 +1,6 @@
 import streamlit as st
 from algorithms.crop_analyzer import CropAnalyzer
+from algorithms.whatsapp import WhatsappSender
 import cv2
 import numpy as np
 from PIL import Image
@@ -26,6 +27,7 @@ if uploaded_file is not None:
     image_np = np.array(image_pil)
     image_cv = cv2.cvtColor(image_np, cv2.COLOR_RGB2BGR)
     image, data = CropAnalyzer.analyze_image(image_cv, 1, 2)
+    WhatsappSender.send_message("+5218111751674", data)
     
     #Handle data - funcion Rossi
     

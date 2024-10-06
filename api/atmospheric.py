@@ -23,10 +23,9 @@ def fetch_thunderstorm_probabilities(date: str):
         response = requests.get(api_url)
         st.image(response.content)
         response.raise_for_status() 
-        return st.success("Convective categories image displayed.")
     except requests.RequestException as e:
         return f"API request failed: {e}"
-    
+
 def fetch_rime_probability(date: str):  
     api_url = f'https://api.meteomatics.com/{date}/prob_rime:p/53.5,7.5_51,11.5:0.01,0.01/png?access_token={token}'
     try:
@@ -44,6 +43,15 @@ def fetch_snow_drift(date: str):
         st.image(response.content)
         response.raise_for_status() 
         return st.success("Snow drift image displayed.")
+    except requests.RequestException as e:
+        return f"API request failed: {e}"
+
+def fetch_snow_drift_csv(date: str):  
+    api_url = f'https://api.meteomatics.com/{date}/snow_drift:idx/54,8.5_51,14.9:0.025,0.025/csv?access_token={token}'
+    try:
+        response = requests.get(api_url)
+        response.raise_for_status() 
+        return response.content.decode('utf-8')
     except requests.RequestException as e:
         return f"API request failed: {e}"
     

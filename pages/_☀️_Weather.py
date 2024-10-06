@@ -2,8 +2,8 @@ import streamlit as st
 import matplotlib.pyplot as plt
 from api.day_counts import *
 from streamlit.components.v1 import html
-from api.atmospheric import fetch_convective_categories, fetch_thunderstorm_probabilities, fetch_rime_probability
-from api.temperature import fetch_windchill
+from api.atmospheric import *
+from api.temperature import *
 from api.weather_params import *
 from api.health import *
 from streamlit_calendar import calendar
@@ -105,6 +105,11 @@ if selected_date:
         st.write('Show the windchill and the temperature at a height of 2 meters for the next five days.')
         data = fetch_windchill(date=selected_date)
         html(data, width=500, height=400)
+        if st.button("Generate brief analysis", key='windchill_button'):
+            res = fetch_windchill_csv(date=selected_date)
+            s = "Analyze the following csv data and provide a detailed analysis."
+            st.write("#### Analysis")
+            st.write(get_gpt_prompt_response(prompt=s + res, system_message="Analyze the following csv data and provide a brief analysis in a single paragraph."),)
 
     with st.container(border=True, key='frost_days'):
         st.subheader('❄️ Frost days')
@@ -166,7 +171,12 @@ if selected_date:
     with st.container(border=True, key='Snow drift'):
         st.subheader('❄️ Snow drift')
         st.write('The snow drift parameter describes how strong snow is carried over the surface due to environmental factors such as wind speed. The index ranges from 0 to 6 with higher values indicating a higher amount of fresh snow being transported because of high wind speeds.')
-        data = fetch_snow_cover(date=selected_date)
+        fetch_snow_drift(date=selected_date)
+        if st.button("Generate brief analysis", key='snow_drift_button'):
+            res = fetch_snow_drift_csv(date=selected_date)
+            s = "Analyze the following csv data and provide a detailed analysis."
+            st.write("#### Analysis")
+            st.write(get_gpt_prompt_response(prompt=s + res, system_message="Analyze the following csv data and provide a brief analysis in a single paragraph."),)
 
     with st.container(border=True, key='pollen_warning'):
         st.subheader('💐 Pollen warning')

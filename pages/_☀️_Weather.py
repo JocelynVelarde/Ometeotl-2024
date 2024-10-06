@@ -2,7 +2,8 @@ import streamlit as st
 import matplotlib.pyplot as plt
 from api.day_counts import fetch_vegetation_days, fetch_heating_days, fetch_extremely_hot_days, fetch_tropical_nights, fetch_frost_days, fetch_rain_days
 from streamlit.components.v1 import html
-from api.weather_params import fetch_weather_description
+from api.weather_params import fetch_weather_description, fetch_fog, fetch_snow_cover
+from api.health import fetch_pollen_concentration, fetch_pollen_warning
 from streamlit_calendar import calendar
 
 import api.location_fetcher as get_location
@@ -14,10 +15,9 @@ st.set_page_config(
 )
 
 lat, lon = get_location.get_latlon()
+location = get_location.get_location_by_ip()
 
-st.date_input('Date Input', value=pd.to_datetime('2021-01-01'))
-
-st.title('Weather for ' + str(lat) + ', ' + str(lon))
+st.title('Weather for ' + location)
 
 container = st.container(border=True)
 
@@ -89,5 +89,28 @@ if selected_date:
         data = fetch_weather_description(date=selected_date)
         html(data, width=500, height=200)
 
+    with st.container(border=True, key='fog'):
+        st.subheader('🌫️ Fog')
+        st.write('Show if there is any fog expected during the next six hours.')
+        data = fetch_fog(date=selected_date)
+        html(data, width=500, height=400)
+
+    with st.container(border=True, key='snow_cover'):
+        st.subheader('⛄️ Snow cover')
+        st.write('Gives the probability for a location/region being covered by snow. The probability is determined by combining information about temperatures at different altitudes and precipitation predictions.')
+        data = fetch_snow_cover(date=selected_date)
+        html(data, width=500, height=400)
+    
+    with st.container(border=True, key='pollen_concentration'):
+        st.subheader('🌼 Pollen concentration')
+        st.write('Gives the total pollen concentration in grains per cubic meter.')
+        data = fetch_pollen_concentration(date=selected_date)
+        html(data, width=500, height=400)
+
+    with st.container(border=True, key='pollen_warning'):
+        st.subheader('💐 Pollen warning')
+        st.write('The pollen warning returns warning levels for different types of pollen loads. The warning levels are based on the pollen concentration in the air.')
+        data = fetch_pollen_warning(date=selected_date)
+        html(data, width=500, height=400)
 
 st.button('Refresh')

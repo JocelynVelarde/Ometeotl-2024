@@ -106,7 +106,6 @@ def get_gpt_prompt_response(prompt, system_message):
     response = requests.post("https://api.openai.com/v1/chat/completions", headers=headers, json=payload)
     response_data = response.json()
 
-    print(response_data)
 
     output_message = response_data['choices'][0]['message']['content']
 

@@ -19,7 +19,6 @@ def fetch_token() -> str:
         response.raise_for_status()
         data = response.json()
         token = data['access_token']
-        print(token)
         return token
     except requests.exceptions.RequestException as err:
         return err

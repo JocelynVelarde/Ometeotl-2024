@@ -20,7 +20,7 @@ st.set_page_config(
 )
 
 st.title('Crops analysis')
-st.write("Analyze crops through an image")
+st.write("Analyze crops through an image and get detailed information.")
 
 st.divider()
 

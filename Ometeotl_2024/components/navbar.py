@@ -38,7 +38,6 @@ def menu_item(text: str, url: str) -> rx.Component:
                 ("Soil", menu_item_icon("sprout")),
                 ("Crop", menu_item_icon("leaf")),
                 ("Credentials", menu_item_icon("key")),
-
             ),
             rx.text(text, size="4", weight="regular"),
             color=rx.cond(

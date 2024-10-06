@@ -11,7 +11,6 @@ class Item(rx.Base):
     date: str
     status: str
 
-
 class TableState(rx.State):
     """The state class."""
 

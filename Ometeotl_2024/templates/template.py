@@ -2,6 +2,8 @@
 
 from __future__ import annotations
 
+from ..backend.credentials_state import CredentialsState
+
 from .. import styles
 from ..components.sidebar import sidebar
 from ..components.navbar import navbar
@@ -44,6 +46,13 @@ class ThemeState(rx.State):
 
     scaling: str = "100%"
 
+    first_load: bool = True
+
+    def toggle_first_load(self):
+        self.first_load = not self.first_load
+
+        if self.first_load:
+            CredentialsState.toggle_fetching()
 
 def template(
     route: str | None = None,
@@ -80,6 +89,7 @@ def template(
         all_meta = [*default_meta, *(meta or [])]
 
         def templated_page():
+            
             return rx.flex(
                 navbar(),
                 sidebar(),
@@ -111,8 +121,8 @@ def template(
                 width="100%",
                 margin="auto",
                 position="relative",
-            )
-
+            ),
+        
         @rx.page(
             route=route,
             title=title,

@@ -1,6 +1,8 @@
 """The overview page of the app."""
 
 import reflex as rx
+
+from ..backend.credentials_state import CredentialsState
 from .. import styles
 from ..templates import template
 from ..views.stats_cards import stats_cards
@@ -43,7 +45,7 @@ def tab_content_header() -> rx.Component:
     )
 
 
-@template(route="/", title="Overview", on_load=StatsState.randomize_data)
+@template(route="/", title="Overview", on_load=[StatsState.randomize_data, CredentialsState.toggle_fetching])
 def index() -> rx.Component:
     """The overview page.
 

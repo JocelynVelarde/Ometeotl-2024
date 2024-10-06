@@ -20,7 +20,31 @@ st.set_page_config(
 lat, lon = get_location.get_latlon()
 city, region, country = get_location.get_location_by_ip()
 
+st.image('assets/weather.jpg', use_column_width=True)
+
 st.title(f'Weather for {city}, {region}, {country}')
+
+st.write('This page allows you to view and explore the various weather parameters for your location.')
+st.write('We are fully **compromised** on making your crops grow better and healthier knowing the weather conditions, analysis and interpretation.')
+
+st.divider()
+
+st.subheader('Step 1: Make sure to have your location activated')
+st.write('This will allow us to provide you with the most accurate weather data for your location.')
+
+st.subheader('Step 2: Select a prediction date from calendar')
+st.write('Note that the forecast is available for the next 35 days. In case you selected a past date, then the actual data from those days will be shown.')
+
+st.subheader('Step 3: Explore the weather parameters')
+st.write('Once you have selected a date, you can explore the various weather parameters available for that date being fetched in real time.')
+
+st.subheader('Step 4: Generate a brief analysis')
+st.write('The majority of weather widgets contain a button **Generate brief analysis**. This button will generate a brief analysis of the data fetched for that specific parameter.')
+st.write('With this easy interpretation, you can understand the data better and make better decisions for your crops.')
+
+st.subheader('Step 5: WhatsApp notifications')
+st.write('Make sure to have your phone added on our notification system to receive the latest weather updates and alerts for your location.')
+st.write('You can add your number on the following page: 💬[WhatsApp Notifications](https://crop-connector.streamlit.app/Whatsapp_Notifications)')
 
 container = st.container(border=True)
 

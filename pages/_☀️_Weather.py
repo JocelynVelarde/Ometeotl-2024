@@ -4,6 +4,7 @@ from api.day_counts import fetch_vegetation_days, fetch_heating_days, fetch_extr
 from streamlit.components.v1 import html
 from api.weather_params import fetch_weather_description, fetch_fog, fetch_snow_cover
 from api.health import fetch_pollen_warning, fetch_land_usage, fetch_open_water_body
+from api.atmospheric import fetch_convective_categories, fetch_thunderstorm_probabilities, fetch_rime_probability
 from streamlit_calendar import calendar
 
 import api.location_fetcher as get_location
@@ -65,6 +66,11 @@ if selected_date:
         data = fetch_extremely_hot_days(date=selected_date)
         html(data, width=500, height=400)
 
+    with st.container(border=True, key='rime_probability'):
+        st.subheader('🌨️ Rime probability')
+        st.write('This parameter describes the probability of rime occurrence. It is given in a range from 0 to 100% and is based on surface temperature (0m), dew point temperature, wind speed and global radiation.')
+        fetch_rime_probability(date=selected_date)
+
     with st.container(border=True, key='tropical_nights'):
         st.subheader('🌴 Tropical nights')
         st.write('This parameter returns the number of tropical nights (days for which the 24-hour minimum temperature was greater than 20°C) since the 1st of January.')
@@ -82,6 +88,11 @@ if selected_date:
         st.write('This parameter returns the number of rain days (days on which at least 0.1 mm of rain fell) since 1st of January.')
         data = fetch_rain_days(date=selected_date)
         html(data, width=500, height=400)
+    
+    with st.container(border=True, key='thunderstorm_probabilities'):
+        st.subheader('⚡️ Thunderstorm probabilities')
+        st.write('Gives the probability of a thunderstorm to occur.')
+        fetch_thunderstorm_probabilities(date=selected_date)
 
     with st.container(border=True, key='weather_description'):
         st.subheader('🌦️ Weather description')
@@ -101,6 +112,11 @@ if selected_date:
         data = fetch_snow_cover(date=selected_date)
         html(data, width=500, height=400)
 
+    with st.container(border=True, key='Snow drift'):
+        st.subheader('❄️ Snow drift')
+        st.write('The snow drift parameter describes how strong snow is carried over the surface due to environmental factors such as wind speed. The index ranges from 0 to 6 with higher values indicating a higher amount of fresh snow being transported because of high wind speeds.')
+        data = fetch_snow_cover(date=selected_date)
+
     with st.container(border=True, key='pollen_warning'):
         st.subheader('💐 Pollen warning')
         st.write('The pollen warning returns warning levels for different types of pollen loads. The warning levels are based on the pollen concentration in the air.')
@@ -117,5 +133,11 @@ if selected_date:
         st.subheader('🌊 Open water body')
         st.write('This index tells you if a coordinate is located within a water body or on land. The index is either 1 for water bodies or 0 for land.')
         fetch_open_water_body(date=selected_date)
+
+    with st.container(border=True, key='convective categories'):
+        st.subheader('⛈️ Convective categories')
+        st.write('Convective categories denote the convective potential of clouds. A high category (category 3 and above) indicates the potential for strong convection and the development of thunderstorm clouds.')
+        fetch_convective_categories(date=selected_date)
+
 
 st.button('Refresh')

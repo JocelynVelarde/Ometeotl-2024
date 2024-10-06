@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 from api.day_counts import fetch_vegetation_days, fetch_heating_days, fetch_extremely_hot_days, fetch_tropical_nights, fetch_frost_days, fetch_rain_days
 from streamlit.components.v1 import html
 from api.weather_params import fetch_weather_description, fetch_fog, fetch_snow_cover
-from api.health import fetch_pollen_concentration, fetch_pollen_warning, fetch_land_usage
+from api.health import fetch_pollen_concentration, fetch_pollen_warning, fetch_land_usage, fetch_open_water_body
 from streamlit_calendar import calendar
 
 import api.location_fetcher as get_location
@@ -15,9 +15,9 @@ st.set_page_config(
 )
 
 lat, lon = get_location.get_latlon()
-location = get_location.get_location_by_ip()
+city, region, country = get_location.get_location_by_ip()
 
-st.title('Weather for ' + location)
+st.title(f'Weather for {city}, {region}, {country}')
 
 container = st.container(border=True)
 
@@ -101,11 +101,7 @@ if selected_date:
         data = fetch_snow_cover(date=selected_date)
         html(data, width=500, height=400)
     
-    with st.container(border=True, key='pollen_concentration'):
-        st.subheader('🌼 Pollen concentration')
-        st.write('Gives the total pollen concentration in grains per cubic meter.')
-        data = fetch_pollen_concentration(date=selected_date)
-        html(data, width=500, height=400)
+    
 
     with st.container(border=True, key='pollen_warning'):
         st.subheader('💐 Pollen warning')
@@ -117,7 +113,13 @@ if selected_date:
         st.subheader('🏞️ Land usage')
         st.write('The return values are integer codes, examples above are 512 for inland water bodies and 112 for discontinuous urban fabric.')
         st.write('Please consult https://www.eea.europa.eu/data-and-maps/data/clc-2006-raster-3/corine-land-cover-classes-and/clc_legend.csv for a table of the codes.')
-        data = fetch_land_usage(date=selected_date)
-        html(data, width=1000, height=1000)
+        fetch_land_usage(date=selected_date)
+
+    with st.container(border=True, key='Open water body'):
+        st.subheader('🌊 Open water body')
+        st.write('This index tells you if a coordinate is located within a water body or on land. The index is either 1 for water bodies or 0 for land.')
+        st.write(data)
+        data = fetch_open_water_body(date=selected_date)
+        html(data, width=500, height=400)
 
 st.button('Refresh')

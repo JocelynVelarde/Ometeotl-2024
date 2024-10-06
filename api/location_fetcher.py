@@ -1,5 +1,3 @@
-from geopy.geocoders import Photon
-
 import requests
 
 def get_latlon() -> tuple:
@@ -14,11 +12,16 @@ def get_latlon() -> tuple:
         print("Could not retrieve location data.")
         return '', ''
 
-def get_location_by_ip():
-    lat, lon = get_latlon()
+def get_location_by_ip() -> tuple:
+    response = requests.get('https://ipinfo.io')
 
-    # Use Geopy to convert latitude and longitude to a human-readable address
-    geolocator = Photon(user_agent="measurements")
-    location = geolocator.reverse(f"{lat}, {lon}", language="en")
+    data = response.json()
 
-    return location.address
+    if 'city' in data:
+        city = data['city']
+        region = data['region']
+        country = data['country']
+        return city, region, country
+    else:
+        print("Could not retrieve location data.")
+        return '', '', ''

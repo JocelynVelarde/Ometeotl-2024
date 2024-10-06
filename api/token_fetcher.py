@@ -1,13 +1,10 @@
 import requests
 import base64
-import os
-from dotenv import load_dotenv
-
-load_dotenv()
+import streamlit as st
 
 def fetch_token() -> str:
-    username = os.getenv("USERNAME")
-    password = os.getenv("PASSWORD")
+    username = st.secrets["username"]
+    password = st.secrets["password"]
 
     # Create the basic authentication header
     credentials = f"{username}:{password}"
@@ -19,11 +16,9 @@ def fetch_token() -> str:
     # Make the GET request
     try:
         response = requests.get('https://login.meteomatics.com/api/v1/token', headers=headers)
-        response.raise_for_status()  # Raise an error for bad responses
+        response.raise_for_status()
         data = response.json()
         token = data['access_token']
-        print('token', token)
         return token
     except requests.exceptions.RequestException as err:
-        print('something went wrong', err)
-        return ''
+        return err

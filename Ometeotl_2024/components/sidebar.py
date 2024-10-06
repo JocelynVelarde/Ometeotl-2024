@@ -14,8 +14,8 @@ def sidebar_header() -> rx.Component:
     return rx.hstack(
         # The logo.
         rx.color_mode_cond(
-            rx.image(src="/reflex_black.svg", height="1.5em"),
-            rx.image(src="/reflex_white.svg", height="1.5em"),
+            rx.image(src="/reflex_black.svg", height="6em"),
+            rx.image(src="/reflex_white.svg", height="6em"),
         ),
         rx.spacer(),
         align="center",
@@ -77,11 +77,14 @@ def sidebar_item(text: str, url: str) -> rx.Component:
             rx.match(
                 text,
                 ("Overview", sidebar_item_icon("home")),
-                ("Table", sidebar_item_icon("table-2")),
+                ("Weather", sidebar_item_icon("sun")),
                 ("About", sidebar_item_icon("book-open")),
                 ("Profile", sidebar_item_icon("user")),
+                ("Crop", sidebar_item_icon("leaf")),
+                ("Farmer", sidebar_item_icon("tractor")),
+                ("Fire", sidebar_item_icon("flame")),
+                ("Soil", sidebar_item_icon("sprout")),
                 ("Settings", sidebar_item_icon("settings")),
-                sidebar_item_icon("layout-dashboard"),
             ),
             rx.text(text, size="3", weight="regular"),
             color=rx.cond(
@@ -133,9 +136,13 @@ def sidebar() -> rx.Component:
     # The ordered page routes.
     ordered_page_routes = [
         "/",
-        "/table",
+        "/weather",
         "/about",
         "/profile",
+        "/crop",
+        "/farmer",
+        "/fire",
+        "/soil",
         "/settings",
     ]
 

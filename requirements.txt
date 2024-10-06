@@ -1,2 +1,3 @@
-reflex>=0.5.5
-inference-sdk
+pandas==2.2.3
+plotly==5.24.1
+reflex==0.6.1

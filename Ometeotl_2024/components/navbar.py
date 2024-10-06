@@ -29,11 +29,15 @@ def menu_item(text: str, url: str) -> rx.Component:
             rx.match(
                 text,
                 ("Overview", menu_item_icon("home")),
-                ("Table", menu_item_icon("table-2")),
+                ("Weather", menu_item_icon("sun")),
                 ("About", menu_item_icon("book-open")),
                 ("Profile", menu_item_icon("user")),
+                ("Farmer", menu_item_icon("tractor")),
                 ("Settings", menu_item_icon("settings")),
-                menu_item_icon("layout-dashboard"),
+                ("Fire", menu_item_icon("flame")),
+                ("Soil", menu_item_icon("sprout")),
+                ("Crop", menu_item_icon("leaf")),
+
             ),
             rx.text(text, size="4", weight="regular"),
             color=rx.cond(
@@ -108,10 +112,14 @@ def menu_button() -> rx.Component:
     # The ordered page routes.
     ordered_page_routes = [
         "/",
-        "/table",
+        "/weather",
         "/about",
         "/profile",
+        "/farmer",
         "/settings",
+        "/fire",
+        "/soil",
+        "/crop",
     ]
 
     # Get the decorated pages.
@@ -180,8 +188,8 @@ def navbar() -> rx.Component:
         rx.hstack(
             # The logo.
             rx.color_mode_cond(
-                rx.image(src="/reflex_black.svg", height="1em"),
-                rx.image(src="/reflex_white.svg", height="1em"),
+                rx.image(src="/reflex_black.svg", height="6em"),
+                rx.image(src="/reflex_white.svg", height="6em"),
             ),
             rx.spacer(),
             menu_button(),

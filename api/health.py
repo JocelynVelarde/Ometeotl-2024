@@ -8,7 +8,6 @@ lat, lon = get_latlon.get_latlon()
 
 def fetch_pollen_warning(date: str):
     date = date[:-13] + '12Z'
-    print(date)
     # https://api.meteomatics.com/2024-10-06T12ZP1D:PT1H/grass_pollen_warning:idx/51.23693,10.13906/html
     api_url = f'https://api.meteomatics.com/{date}P1D:PT1H/grass_pollen_warning:idx/51.23693,10.13906/html?access_token={token}'
     try:

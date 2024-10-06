@@ -13,14 +13,17 @@ col1, col2, col3 = st.columns(3)
 
 st.divider()
 
+r1, r2, r3 = False, False, False
+
 with col1:
-    st.button("Message AI for support")
+    r1 = st.button("Message AI for support")
 
 with col2:
-    st.button("Message agent for support")
+    r2 = st.button("Message agent for support")
 
 with col3:
-    st.button("Call agent for support")
+    r3 = st.button("Call agent for support")
+
 
 with st.container():
-    st.write("Or, you can check out the weather widgets below!")
+    st.chat_input("Type your message here...")

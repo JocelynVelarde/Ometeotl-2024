@@ -3,7 +3,7 @@ import api.token_fetcher as fetch_token
 import api.location_fetcher as get_location
 
 token = fetch_token.fetch_token()
-lat, lon = get_location.get_location()
+lat, lon = get_location.get_latlon()
 
 def fetch_vegetation_days(date: str):
     api_url = f'https://api.meteomatics.com/{date}P35D:P1D/vegetation_days:d/{lat},{lon}/html?access_token={token}'

@@ -12,7 +12,7 @@ st.set_page_config(
     page_icon="🪴",
 )
 
-lat, lon = get_location.get_location()
+lat, lon = get_location.get_latlon()
 
 st.date_input('Date Input', value=pd.to_datetime('2021-01-01'))
 
@@ -29,7 +29,7 @@ selected_date = ""
 with st.container(border=True, key='calendar'):
     st.subheader('📅 Select a prediction date')
     calendar = calendar(options=calendar_options)
-    
+
     if "dateClick" in calendar:
         selected_date = calendar["dateClick"]["date"]
         st.write(f'Selected date: {selected_date}')

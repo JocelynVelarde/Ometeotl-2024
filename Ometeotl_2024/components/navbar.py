@@ -37,6 +37,7 @@ def menu_item(text: str, url: str) -> rx.Component:
                 ("Fire", menu_item_icon("flame")),
                 ("Soil", menu_item_icon("sprout")),
                 ("Crop", menu_item_icon("leaf")),
+                ("Credentials", menu_item_icon("key")),
 
             ),
             rx.text(text, size="4", weight="regular"),
@@ -120,6 +121,7 @@ def menu_button() -> rx.Component:
         "/fire",
         "/soil",
         "/crop",
+        "/credentials",
     ]
 
     # Get the decorated pages.

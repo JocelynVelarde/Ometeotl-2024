@@ -7,3 +7,4 @@ from .crop import crop
 from .farmer import farmer
 from .fire import fire
 from .soil import soil
+from .credentials import credentials

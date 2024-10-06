@@ -1,6 +1,7 @@
 import streamlit as st
 import matplotlib.pyplot as plt
 
+
 st.set_page_config(
     page_title="Crop Connect",
     page_icon="🪴",
@@ -22,9 +23,9 @@ if st.button('Generate farm'):
     st.success('Farm generated successfully!')
 
     # Generate the grid
-    for 10 in range(int(10)):
-        cols = st.columns(int(20))
+    for row in range(int(rows)):
+        cols = st.columns(int(columns))
         for col_index, col in enumerate(cols):
             with col:
-                if st.button("🌾", key=f"{10}-{col_index}"):
-                    st.write(f"Clicked on cell ({10+1}, {col_index+1})")
+                if st.button("🌾", key=f"{row}-{col_index}"):
+                    st.write(f"Clicked on cell ({row+1}, {col_index+1})")

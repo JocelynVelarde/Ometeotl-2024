@@ -1,5 +1,5 @@
-username='velarde_jocelyn'
-password='Ffcd5D4E1o'
+username=''
+password=''
 let headers = new Headers();
 headers.set('Authorization', 'Basic ' + btoa(username + ":" + password));
 fetch('https://login.meteomatics.com/api/v1/token', {

@@ -16,6 +16,9 @@ lat, lon = get_location.get_location()
 
 st.title('Weather for ' + str(lat) + ', ' + str(lon))
 container = st.container(border=True)
+
+
+
 container.subheader('📍 My location')
 # Ensure latitude and longitude are floats
 location_df = pd.DataFrame({

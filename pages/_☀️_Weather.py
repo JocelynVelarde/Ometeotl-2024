@@ -100,8 +100,6 @@ if selected_date:
         st.write('Gives the probability for a location/region being covered by snow. The probability is determined by combining information about temperatures at different altitudes and precipitation predictions.')
         data = fetch_snow_cover(date=selected_date)
         html(data, width=500, height=400)
-    
-    
 
     with st.container(border=True, key='pollen_warning'):
         st.subheader('💐 Pollen warning')
@@ -118,8 +116,6 @@ if selected_date:
     with st.container(border=True, key='Open water body'):
         st.subheader('🌊 Open water body')
         st.write('This index tells you if a coordinate is located within a water body or on land. The index is either 1 for water bodies or 0 for land.')
-        st.write(data)
         data = fetch_open_water_body(date=selected_date)
-        html(data, width=500, height=400)
 
 st.button('Refresh')

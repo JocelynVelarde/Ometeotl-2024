@@ -5,6 +5,7 @@ from streamlit.components.v1 import html
 from api.weather_params import fetch_weather_description, fetch_fog, fetch_snow_cover
 from api.health import fetch_pollen_warning, fetch_land_usage, fetch_open_water_body
 from api.atmospheric import fetch_convective_categories, fetch_thunderstorm_probabilities, fetch_rime_probability
+from api.temperature import fetch_windchill
 from streamlit_calendar import calendar
 
 import api.location_fetcher as get_location
@@ -75,6 +76,12 @@ if selected_date:
         st.subheader('🌴 Tropical nights')
         st.write('This parameter returns the number of tropical nights (days for which the 24-hour minimum temperature was greater than 20°C) since the 1st of January.')
         data = fetch_tropical_nights(date=selected_date)
+        html(data, width=500, height=400)
+
+    with st.container(border=True, key='windchill'):
+        st.subheader('🌬️ Windchill')
+        st.write('Show the windchill and the temperature at a height of 2 meters for the next five days.')
+        data = fetch_windchill(date=selected_date)
         html(data, width=500, height=400)
 
     with st.container(border=True, key='frost_days'):

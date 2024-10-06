@@ -64,8 +64,6 @@ def get_image_analysis(images, prompt):
     response = requests.post("https://api.openai.com/v1/chat/completions", headers=headers, json=payload)
     response_data = response.json()
 
-    print(response_data)
-
     output_message = response_data['choices'][0]['message']['content']
 
     return output_message  

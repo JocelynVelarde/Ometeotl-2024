@@ -1,9 +1,12 @@
 """
 digitalTwin class is a class that represents a digital twin of a farm.
 
-The class has methods that calculate the ripeness of the plants, the number of weeds, the health of the plants, the water status of the plants, and the diversity of the leaves.
+Dimension 0: Ripeness of the plants.
+Dimension 1: Number of weeds.
+Dimension 2: Health of the plants.
+Dimension 3: Water status of the plants.
+Dimension 4: Diversity of the leaves.
 
-.-.
 """
 
 
@@ -142,7 +145,7 @@ class Twin:
 
     def set_value(self, coordinate, dimension, value):
         cord = (*coordinate, dimension)
-        self.matrix[cord] = value
+        self.matrix[cord] += value
 
     def average_values(self):
         rows, cols, dims = self.get_shape()

@@ -1,7 +1,8 @@
+## PLOT THE GEOTIFF IMAGE TO DISPLAY
 import proplot as plot
 import xarray as xr
 
-dem = xr.open_rasterio('https://download.osgeo.org/geotiff/samples/pci_eg/latlong.tif')
+dem = xr.open_rasterio('DataGiovanni.tif')
 dem = dem[0]
 
 # Define extents

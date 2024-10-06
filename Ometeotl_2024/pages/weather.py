@@ -24,7 +24,6 @@ class WeatherState(rx.State):
             self._n_tasks += 1
             self.loading = True
 
-        
         response = make_api_request('GET', 'https://api.meteomatics.com/2024-10-05T12:00:00Z/t_2m:C/90,-180_-90,180:600x400/png?access_token=eyJhbGciOiJFUzI1NiIsInR5cCI6IkpXVCJ9.eyJ2IjoxLCJ1c2VyIjoidmVsYXJkZV9qb2NlbHluIiwiaXNzIjoibG9naW4ubWV0ZW9tYXRpY3MuY29tIiwiZXhwIjoxNzI4MTc1OTI1LCJzdWIiOiJhY2Nlc3MifQ.hbHKbiq_RMYos3ZDO90n8vxQRcDb-Sxl2COYFTWIRBT2xNBMtN_c4bMngzu9yail-PUGcqY6b-xIY85NV1-ifg')
         image = Image.open(io.BytesIO(response.content))
         image.save('output.png')

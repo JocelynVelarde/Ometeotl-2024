@@ -160,4 +160,9 @@ class Twin:
             zeros = zeros / 4
             self.matrix[:,:,i] = zeros
 
+    def get_dimension(self, dimension):
+        return self.matrix[: ,: ,dimension]
+
+
+
 

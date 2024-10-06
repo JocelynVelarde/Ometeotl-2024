@@ -59,16 +59,17 @@ class Example:
                 self.farm.run_analysis(entry)
             self.farm.average_values()
 
-        return self.farm.matrix
+
 
 
 """
-EXAMPLE RUN
+
 
 e = Example(30, 10)
-print(e.time_analysis())
+e.time_analysis()
+print(e.farm.get_dimension(0))
 
-//this is for the logs that shall be passed to the LLM
+#//this is for the logs that shall be passed to the LLM
 print(e.farm.ilness_log)
 print(e.farm.pest_log)
 

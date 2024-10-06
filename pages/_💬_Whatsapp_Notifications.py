@@ -48,7 +48,7 @@ st.write("\n\n")
 
 st.subheader('Step 2: Save your phone number')
 st.write("Make sure to save your phone number below to receive notifications")
-st.session_state.phone_number = st.text_input("Add or update phone number:", value=st.session_state.phone_number)
+st.session_state.phone_number = st.text_input("Add or update phone number:")
 # Display the current phone number
 if st.button("Save Phone Number"):
     st.session_state.phone_number = str(st.session_state.phone_number)

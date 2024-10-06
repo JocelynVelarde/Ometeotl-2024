@@ -20,7 +20,17 @@ st.set_page_config(
 )
 
 st.title('Crops analysis')
-st.write("Analyze crops through an image")
+st.write("Upload or take an image to analyze the crop and get detailed information. Some of the detected features include: crop type, health, plant illness, pests and more.")
+
+st.divider()
+
+st.subheader('Step 1: Upload image')
+st.markdown('Upload an image of the crop you want to analyze by clicking on _Browse files_ below. The image should be clear and focused on the crop.')
+st.write("or")
+st.markdown('Click on _Enable Camera_ button below and then click on _Take Photo_ to take a picture of the crop directly from your device.')
+
+st.subheader('Step 2: Wait for results')
+st.markdown('As soon as the image is uploaded, the analysis will start and take a few seconds to complete. Once the results are available, they will be displayed below.')
 
 st.divider()
 
@@ -45,8 +55,6 @@ if st.session_state.camera_enabled:
     if st.button("Cancel Camera"):
         st.session_state.camera_enabled = False
 
-if not st.session_state.camera_enabled:
-    st.write("Camera is not enabled.")
 
 if uploaded_file is not None:
     st.write(f"Uploaded file: {uploaded_file.name}")

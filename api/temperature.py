@@ -1,12 +1,7 @@
 import requests
-import api.token_fetcher as fetch_token
-import api.location_fetcher as get_latlon
 import streamlit as st
 
-token = fetch_token.fetch_token()
-lat, lon = get_latlon.get_latlon()
-
-def fetch_windchill(date: str):
+def fetch_windchill(date: str, lat: float, lon: float, token: str):
     api_url = f'https://api.meteomatics.com/{date}P5D:PT1H/windchill:C,t_2m:C/{lat},{lon}/html?access_token={token}'
     try:
         response = requests.get(api_url)
@@ -15,7 +10,7 @@ def fetch_windchill(date: str):
     except requests.RequestException as e:
         return f"API request failed: {e}"
 
-def fetch_windchill_csv(date: str):
+def fetch_windchill_csv(date: str, lat: float, lon: float, token: str):
     api_url = f'https://api.meteomatics.com/{date}P5D:PT1H/windchill:C,t_2m:C/{lat},{lon}/csv?access_token={token}'
     try:
         response = requests.get(api_url)

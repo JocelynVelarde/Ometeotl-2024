@@ -5,3 +5,4 @@ streamlit-calendar
 twilio
 inference_sdk
 opencv-python
+geopy

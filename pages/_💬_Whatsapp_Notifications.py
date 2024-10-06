@@ -1,9 +1,14 @@
 import streamlit as st
 import pandas as pd
 import numpy as np
+import api.mongo_connection as MongoConnection
+
 
 if 'phone_number' not in st.session_state:
-    st.session_state.phone_number = "123"
+    with open("phone.txt", 'r') as file:
+        text = file.read()
+    st.session_state.phone_number = text
+    # MongoConnection.get_one_data("number", "numberData", "number")
 
 
 st.set_page_config(
@@ -54,5 +59,12 @@ st.write("Make sure to save your phone number below to receive notifications")
 st.session_state.phone_number = st.text_input("Add or update phone number:", value=st.session_state.phone_number)
 # Display the current phone number
 if st.button("Save Phone Number"):
-    st.session_state.phone_number = st.session_state.phone_number
-    st.success("Phone number saved!")
+    st.session_state.phone_number = str(st.session_state.phone_number)
+    with open("phone.txt", 'w') as file:
+        file.write(st.session_state.phone_number)
+
+    try: 
+        # MongoConnection.insert_data({"phone_number": st.session_state.phone_number}, "number", "numberData")
+        st.success("Phone number saved!")
+    except Exception as e:
+        st.error(f"Error saving phone number: {e}")

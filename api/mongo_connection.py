@@ -2,10 +2,9 @@
 from pymongo.server_api import ServerApi
 from pymongo import MongoClient
 from json import JSONEncoder
-
 import streamlit as st
 
-client = MongoClient(uri=st.secrets['MONGO_URI'], server_api=ServerApi('1'))
+client = MongoClient(st.secrets["MONGO_URI"], tls=True, tlsAllowInvalidCertificates=True, server_api=ServerApi('1'))
 
 def insert_data(data :str, database: str, collection: str) -> str:
     try:

@@ -21,12 +21,41 @@ st.divider()
 uploaded_file = st.file_uploader("Upload an image", type=["jpg", "jpeg", "png"])
 
 # Camera input
-picture = st.camera_input("Capture a picture")
+# uploaded_file = st.camera_input("Capture a picture")
 
-if picture is not None:
-    # To read file as bytes
-    st.image(picture, caption='Captured Image', use_column_width=True)
+# Initialize session state for camera enabled
+if 'camera_enabled' not in st.session_state:
+    st.session_state.camera_enabled = False
 
+# Button to enable camera
+if st.session_state.camera_enabled == False:
+    if st.button("Enable Camera"):
+        st.session_state.camera_enabled = True
+
+# Display camera input only if the camera is enabled
+if st.session_state.camera_enabled:
+    picture = st.camera_input("Capture a picture")
+
+
+    # If a picture is taken, display it
+    if picture is not None:
+        st.image(picture, caption='Captured Image', use_column_width=True)
+
+    # Button to cancel/disable camera input
+    if st.button("Cancel Camera"):
+        st.session_state.camera_enabled = False
+# Inform the user if the camera is disabled
+if not st.session_state.camera_enabled:
+    st.write("Camera is not enabled.")
+
+# # Display message if camera is disabled
+# if not st.session_state.camera_enabled:
+#     st.write("Camera is not enabled.")
+
+# if picture is not None:
+#     # To read file as bytes
+#     st.image(picture, caption='Captured Image', use_column_width=True)
+# st.write(st.session_state.phone_number)
 
 # Display the file details after uploading
 if uploaded_file is not None:
@@ -36,7 +65,8 @@ if uploaded_file is not None:
     image_np = np.array(image_pil)
     image_cv = cv2.cvtColor(image_np, cv2.COLOR_RGB2BGR)
     image, data = CropAnalyzer.analyze_image(image_cv, 1, 2)
-    WhatsappSender.send_message("+5218111751674", data)
+    
+    WhatsappSender.send_message(st.phone_number, data)
     
     #Handle data - funcion Rossi
     

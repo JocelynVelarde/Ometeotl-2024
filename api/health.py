@@ -6,19 +6,6 @@ import streamlit as st
 token = fetch_token.fetch_token()
 lat, lon = get_latlon.get_latlon()
 
-def fetch_pollen_concentration(init_data: str, final_date: str):
-    init_data = init_data[:-13] + 'Z'
-    final_date = final_date[:-13] + 'Z'
-    # https://api.meteomatics.com/2024-10-06T00Z--2024-10-09T00Z:PT1H/grass_pollen:grainsm3/43.7800148,11.2059487/html
-    api_url = f'https://api.meteomatics.com/{init_data}--{final_date}:PT1H/grass_pollen:grainsm3/43.7800148,11.2059487/html?access_token={token}'
-    try:
-        response = requests.get(api_url)
-        response.raise_for_status() 
-        return response.content.decode("utf-8")
-    except requests.RequestException as e:
-        return f"API request failed: {e}"
-    
-
 def fetch_pollen_warning(date: str):
     date = date[:-13] + '12Z'
     print(date)

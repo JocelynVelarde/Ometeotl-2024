@@ -7,8 +7,6 @@ from algorithms.gpt_analysis import *
 import cv2
 from datetime import datetime
 
-
-
 colors = [
     (0, 128, 255),  # Light Blue
     (0, 64, 128),   # Dark Blue

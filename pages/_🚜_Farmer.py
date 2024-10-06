@@ -4,11 +4,11 @@ from algorithms.gpt_analysis import get_image_analysis, get_gpt_prompt_response
 import streamlit as st
 
 st.set_page_config(
-    page_title="Crop Connect",
-    page_icon="🪴",
+    page_title="Farmer Assistant",
+    page_icon="🚜",
 )
-
-st.markdown('# :green[Farmer Assistant]')
+st.image('assets/plant.jpg', use_column_width=True)
+st.title("🚜 Farmer Assistant")
 
 st.write("Select a support method, and we'll gladly assist you!")
 

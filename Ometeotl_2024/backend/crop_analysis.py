@@ -1,8 +1,8 @@
 from inference_sdk import InferenceHTTPClient
 import os
 from dotenv import load_dotenv
-import cv2
 import json
+
 
 class CropAnalysis:
     CONF_THRESHOLD = 0.5

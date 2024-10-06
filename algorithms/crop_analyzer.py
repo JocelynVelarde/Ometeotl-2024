@@ -2,7 +2,9 @@ from inference_sdk import InferenceHTTPClient
 import os
 from dotenv import load_dotenv
 import json
+import streamlit as st
 import cv2
+
 
 colors = [
     (0, 128, 255),  # Light Blue
@@ -19,8 +21,9 @@ colors = [
 
 class CropAnalyzer:
     CONF_THRESHOLD = 0.5
-    load_dotenv()
-    key = os.getenv("ROBOFLOW_API_KEY")
+    # load_dotenv()
+    # key = os.getenv("ROBOFLOW_API_KEY")
+    key = st.secrets["Roboflow"]["ROBOFLOW_API_KEY"]
 
     CLIENT = InferenceHTTPClient(
         api_url="https://detect.roboflow.com",

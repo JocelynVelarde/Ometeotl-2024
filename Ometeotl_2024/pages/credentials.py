@@ -1,6 +1,7 @@
 
 from ..templates import template
 
+from ..backend.token_fetcher import fetch_token
 import reflex as rx
 import requests
 
@@ -23,9 +24,12 @@ class CredentialsState(rx.State):
         else:
             print("Could not retrieve location data.")
         
+        token = fetch_token()
+
         async with self:
             self.lat = lat
             self.lon = lon
+            self.access_token = token
 
     def toggle_fetching(self):
         self.running = not self.running
@@ -51,6 +55,8 @@ def credentials() -> rx.Component:
                 rx.text(f"Latitude: {CredentialsState.lat}"),
                 rx.text(" "),
                 rx.text(f"Longitude: {CredentialsState.lon}"),
+                rx.text(" "),
+                rx.text(f"Access Token: {CredentialsState.access_token}"),
             ),
         ),
         rx.button(

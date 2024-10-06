@@ -19,10 +19,3 @@ def make_api_request(method: str, url: str, **kwargs) -> requests.Response:
 
     response = requests.request(method, url, **kwargs)
     return response
-
-# Example usage:
-# response = make_api_request('GET', 'https://api.example.com/data')
-# print(response.status_code)
-# print(response.json())
-
-

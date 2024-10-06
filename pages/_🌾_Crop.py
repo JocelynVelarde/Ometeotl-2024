@@ -12,11 +12,20 @@ st.set_page_config(
 )
 
 st.title('Crops analysis')
+st.write("Analyze crops through an image")
 
 st.divider()
 
+
 # File upload section
 uploaded_file = st.file_uploader("Upload an image", type=["jpg", "jpeg", "png"])
+
+# Camera input
+picture = st.camera_input("Capture a picture")
+
+if picture is not None:
+    # To read file as bytes
+    st.image(picture, caption='Captured Image', use_column_width=True)
 
 
 # Display the file details after uploading

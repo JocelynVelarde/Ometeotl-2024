@@ -4,7 +4,7 @@ from dotenv import load_dotenv
 import streamlit as st
 
 class WhatsappSender:
-    # load_dotenv()
+    load_dotenv()
 
     # ACCOUNT_SID = os.getenv("TWILIO_ACCOUNT_SID")
     # AUTH_TOKEN = os.getenv("TWILIO_AUTH_TOKEN")
@@ -24,5 +24,5 @@ class WhatsappSender:
         return message.sid
     
 if __name__ == "__main__":
-    WhatsappSender.send_message("+528110517608", "This is a custom test")
+    WhatsappSender.send_message("+5218110517608", "This is a custom test")
     print("Message sent successfully!")

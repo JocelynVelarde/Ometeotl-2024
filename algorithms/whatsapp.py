@@ -1,12 +1,16 @@
 from twilio.rest import Client
 import os
 from dotenv import load_dotenv
+import streamlit as st
 
 class WhatsappSender:
-    load_dotenv()
+    # load_dotenv()
 
-    ACCOUNT_SID = os.getenv("TWILIO_ACCOUNT_SID")
-    AUTH_TOKEN = os.getenv("TWILIO_AUTH_TOKEN")
+    # ACCOUNT_SID = os.getenv("TWILIO_ACCOUNT_SID")
+    # AUTH_TOKEN = os.getenv("TWILIO_AUTH_TOKEN")
+
+    ACCOUNT_SID = st.secrets["Twilio"]["TWILIO_ACCOUNT_SID"]
+    AUTH_TOKEN = st.secrets["Twilio"]["TWILIO_AUTH_TOKEN"]
     CLIENT = Client(ACCOUNT_SID, AUTH_TOKEN)
 
     @classmethod

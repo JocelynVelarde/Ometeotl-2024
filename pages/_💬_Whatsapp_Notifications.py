@@ -60,11 +60,9 @@ st.session_state.phone_number = st.text_input("Add or update phone number:", val
 # Display the current phone number
 if st.button("Save Phone Number"):
     st.session_state.phone_number = str(st.session_state.phone_number)
-    with open("phone.txt", 'w') as file:
-        file.write(st.session_state.phone_number)
 
     try: 
-        # MongoConnection.insert_data({"phone_number": st.session_state.phone_number}, "number", "numberData")
+        MongoConnection.insert_data({"phone_number": st.session_state.phone_number}, "numberData", "number")
         st.success("Phone number saved!")
     except Exception as e:
         st.error(f"Error saving phone number: {e}")

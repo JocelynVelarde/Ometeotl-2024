@@ -1,3 +1,4 @@
+
 aiohappyeyeballs==2.4.3
 aiohttp==3.10.9
 aiohttp-retry==2.8.3
@@ -121,3 +122,10 @@ wrapt==1.16.0
 wsproto==1.2.0
 yarl==1.13.1
 zipp==3.20.2
+pandas
+plotly
+reflex
+streamlit-calendar
+twilio
+inference_sdk
+opencv-python

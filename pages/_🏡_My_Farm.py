@@ -9,6 +9,8 @@ st.set_page_config(
 
 st.image('assets/farm.jpg', use_column_width=True)
 
+st.title('🏡 Farm overview')
+
 st.write('This page allows you to view the different coordinates and location on your farm and see individual details of each plot.')
 
 st.divider()
@@ -20,9 +22,9 @@ if st.button('Generate farm'):
     st.success('Farm generated successfully!')
 
     # Generate the grid
-    for row in range(int(rows)):
-        cols = st.columns(int(columns))
+    for 10 in range(int(10)):
+        cols = st.columns(int(20))
         for col_index, col in enumerate(cols):
             with col:
-                if st.button("🌾", key=f"{row}-{col_index}"):
-                    st.write(f"Clicked on cell ({row+1}, {col_index+1})")
+                if st.button("🌾", key=f"{10}-{col_index}"):
+                    st.write(f"Clicked on cell ({10+1}, {col_index+1})")

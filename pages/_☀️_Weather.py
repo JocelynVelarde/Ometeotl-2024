@@ -24,7 +24,7 @@ token = Credentials.fetch_token()
 
 st.image('assets/weather.jpg', use_column_width=True)
 
-st.title(f'Weather for {city}, {region}, {country}')
+st.title(f'☀️ Weather for {city}, {region}, {country}')
 
 st.write('This page allows you to view and explore the various weather parameters for your location.')
 st.write('We are fully **compromised** on making your crops grow better and healthier knowing the weather conditions, analysis and interpretation.')

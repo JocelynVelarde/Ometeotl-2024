@@ -15,11 +15,12 @@ if 'phone_number' not in st.session_state:
 
 # Page configuration
 st.set_page_config(
-        page_title="Crop Connect",
-        page_icon="🪴",
+        page_title="Crop",
+        page_icon="🌾",
 )
 
-st.title('Crops analysis')
+st.image('assets/wheat.png', use_column_width=True)
+st.title('🌾 Crops analysis')
 st.write("Upload or take an image to analyze the crop and get detailed information. Some of the detected features include: crop type, health, plant illness, pests and more.")
 
 st.divider()
@@ -40,7 +41,7 @@ st.markdown('As soon as the image is uploaded, the analysis will start and take 
 st.divider()
 
 # Coordinates input
-st.subheader('Coordinates')
+st.subheader('🧭 Coordinates')
 col1, col2 = st.columns(2)
 x1, y1 = 0, 0
 with col1:

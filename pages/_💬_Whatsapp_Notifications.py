@@ -15,12 +15,12 @@ st.set_page_config(
         page_title="Whatsapp Notifications",
         page_icon="💬",
 )
+st.image('assets/whats.jpg', use_column_width=True)
+st.title('💬 Whatsapp Notifications')
 
-st.title('Whatsapp Notifications')
 st.write("With crop connect you can also receive notifications to your phone via whatsapp")
 
 st.divider()
-
 
 st.write("\n\n")
 st.write("\n\n")

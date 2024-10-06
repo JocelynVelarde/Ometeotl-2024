@@ -101,11 +101,7 @@ if selected_date:
         data = fetch_snow_cover(date=selected_date)
         html(data, width=500, height=400)
     
-    with st.container(border=True, key='pollen_concentration'):
-        st.subheader('🌼 Pollen concentration')
-        st.write('Gives the total pollen concentration in grains per cubic meter.')
-        data = fetch_pollen_concentration(date=selected_date)
-        html(data, width=500, height=400)
+
 
     with st.container(border=True, key='pollen_warning'):
         st.subheader('💐 Pollen warning')
@@ -117,8 +113,7 @@ if selected_date:
         st.subheader('🏞️ Land usage')
         st.write('The return values are integer codes, examples above are 512 for inland water bodies and 112 for discontinuous urban fabric.')
         st.write('Please consult https://www.eea.europa.eu/data-and-maps/data/clc-2006-raster-3/corine-land-cover-classes-and/clc_legend.csv for a table of the codes.')
-        data = fetch_land_usage(date=selected_date)
-        html(data, width=500, height=400)
+        fetch_land_usage(date=selected_date)
 
     with st.container(border=True, key='Open water body'):
         st.subheader('🌊 Open water body')
@@ -126,5 +121,6 @@ if selected_date:
         st.write(data)
         data = fetch_open_water_body(date=selected_date)
         html(data, width=500, height=400)
+        log_data_type(data, 'land_usage')
 
 st.button('Refresh')

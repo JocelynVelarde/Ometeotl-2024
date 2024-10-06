@@ -6,9 +6,8 @@ import streamlit as st
 token = fetch_token.fetch_token()
 lat, lon = get_latlon.get_latlon()
 
-def fetch_pollen_warning(date: str):
+def fetch_pollen_warning_image(date: str):
     date = date[:-13] + '12Z'
-    # https://api.meteomatics.com/2024-10-06T12ZP1D:PT1H/grass_pollen_warning:idx/51.23693,10.13906/html
     api_url = f'https://api.meteomatics.com/{date}P1D:PT1H/grass_pollen_warning:idx/51.23693,10.13906/html?access_token={token}'
     try:
         response = requests.get(api_url)
@@ -17,8 +16,26 @@ def fetch_pollen_warning(date: str):
     except requests.RequestException as e:
         return f"API request failed: {e}"
     
+def fetch_pollen_warning_csv(date: str):
+    date = date[:-13] + '12Z'
+    api_url = f'https://api.meteomatics.com/{date}P1D:PT1H/grass_pollen_warning:idx/51.23693,10.13906/csv?access_token={token}'
+    try:
+        response = requests.get(api_url)
+        response.raise_for_status() 
+        return response.content.decode('utf-8')
+    except requests.RequestException as e:
+        return f"API request failed: {e}"
     
 
+def fetch_land_usage(date: str):
+    api_url = f'https://api.meteomatics.com/{date}/land_usage:idx/46,7.3_45.5,7.8:0.001,0.001/png?access_token={token}'
+    try:
+        response = requests.get(api_url)
+        response.raise_for_status()
+        st.image(response.content)
+    except requests.RequestException as e:
+        return f"API request failed: {e}"
+    
 def fetch_open_water_body(date: str):
     # https://api.meteomatics.com/2024-10-06T18:00:00Z/land_usage:idx/46,7.3_45.5,7.8:0.001,0.001/html 
     # # https://api.meteomatics.com/2024-10-06T18:00:00Z/is_in_shadow:idx/46,7.3_45.5,7.8:0.001,0.001/html   
@@ -27,19 +44,5 @@ def fetch_open_water_body(date: str):
         response = requests.get(api_url)
         response.raise_for_status()
         st.image(response.content)
-        return st.success("Open water body image displayed.")
     except requests.RequestException as e:
         return f"API request failed: {e}"
-
-def fetch_land_usage(date: str):
-    # https://api.meteomatics.com/2024-10-06T18:00:00Z/land_usage:idx/46,7.3_45.5,7.8:0.001,0.001/html 
-    # # https://api.meteomatics.com/2024-10-06T18:00:00Z/is_in_shadow:idx/46,7.3_45.5,7.8:0.001,0.001/html   
-    api_url = f'https://api.meteomatics.com/{date}/land_usage:idx/46,7.3_45.5,7.8:0.001,0.001/png?access_token={token}'
-    try:
-        response = requests.get(api_url)
-        response.raise_for_status()
-        st.image(response.content)
-        return st.success("Land usage image displayed.")
-    except requests.RequestException as e:
-        return f"API request failed: {e}"
-    

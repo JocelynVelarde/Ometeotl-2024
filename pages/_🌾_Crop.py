@@ -16,14 +16,17 @@ st.divider()
 
 # File upload section
 uploaded_file = st.file_uploader("Upload an image", type=["jpg", "jpeg", "png"])
-image_pil = Image.open(uploaded_file)
-image_np = np.array(image_pil)
-image_cv = cv2.cvtColor(image_np, cv2.COLOR_RGB2BGR)
+
 
 # Display the file details after uploading
 if uploaded_file is not None:
     st.write(f"Uploaded file: {uploaded_file.name}")
+
+    image_pil = Image.open(uploaded_file)
+    image_np = np.array(image_pil)
+    image_cv = cv2.cvtColor(image_np, cv2.COLOR_RGB2BGR)
     image, data = CropAnalyzer.analyze_image(image_cv, 1, 2)
+    
     #Handle data - funcion Rossi
     
     image_rgb = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)

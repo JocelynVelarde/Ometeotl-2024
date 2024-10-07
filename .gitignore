@@ -12,3 +12,5 @@ vision
 test_imgs/
 .streamlit/
 *.jpg
+/env
+env/creds.py

@@ -8,3 +8,9 @@ __pycache__/
 assets/external/
 venv/
 vision
+*.env
+test_imgs/
+.streamlit/
+*.jpg
+/env
+env/creds.py

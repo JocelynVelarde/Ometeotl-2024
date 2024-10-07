@@ -30,8 +30,6 @@ matrix = e.farm.get_dimension(dimension=dimension).tolist()
 
 for i in range(10):
     cols = st.columns(20)
-    if dimension == 1:
-        print(f'{i}: {matrix[i]}')
     for col_index, col in enumerate(cols):
         with col:
             if dimension == 0:
@@ -42,11 +40,24 @@ for i in range(10):
                     st.write("🟢")
                 elif matrix[i][col_index] > 1.5:
                     st.write("🔴")
-            elif dimension == 1:
+
+            elif dimension == 1 or dimension == 2 or dimension == 4:
                 st.write(int(matrix[i][col_index]))
-    
+            elif dimension == 3:
+                if matrix[i][col_index] <= 0:
+                    st.write("🔵")
+                elif matrix[i][col_index] > 0 and matrix[i][col_index] <= 1.5:
+                    st.write("🟢")
+                elif matrix[i][col_index] > 1.5:
+                    st.write("🔴")
+
     st.divider()
 
-st.write('🔵 - Healthy plants'
-         '\n🟢 - Healthy plants'
-         '\n🔴 - Weed')
+if dimension == 0:
+    st.write('🔵 - Healthy plants'
+        '\n🟢 - Healthy plants'
+        '\n🔴 - Weed')
+elif dimension == 3:
+    st.write('🔵 - Dry'
+    '\n🟢 - Healthy plants'
+    '\n🔴 - Overwatered')

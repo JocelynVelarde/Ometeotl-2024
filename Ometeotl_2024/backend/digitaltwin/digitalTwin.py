@@ -37,6 +37,11 @@ class Twin:
             "Fungus": 0,
             "Pest": 0,
             "Burning": 0}
+        self.normalization = {0: (0, 1.5),
+                              1: (0, 1),
+                              2: (0, 1),
+                              3: (0, 1.5),
+                              4: (0, 1)}
 
     def get_ripeness(self, plot_data):
 
@@ -137,6 +142,19 @@ class Twin:
         self.set_value(coordinate, 3, water_status)
         self.set_value(coordinate, 4, leaf_diversity)
 
+    def normalize_matrix(self, value_range, dimension):
+        min_value, max_value = value_range
+        matrix_min = np.min(self.matrix[:,:,dimension])
+        matrix_max = np.max(self.matrix[:,:,dimension])
+
+        # Scale to [0, 1]
+        normalized_matrix = (self.matrix[:,:,dimension] - matrix_min) / (matrix_max - matrix_min)
+
+        # Scale to [min_value, max_value]
+        normalized_matrix = normalized_matrix * (max_value - min_value) + min_value
+
+        return normalized_matrix
+
     def get_matrix(self):
             return self.matrix
 
@@ -159,10 +177,6 @@ class Twin:
             zeros[:, 1:-1] = zeros[:, 1:-1]  + twod_matrix[:, 1:-1]
             zeros = zeros / 4
             self.matrix[:,:,i] = zeros
-
-    def get_dimension(self, dimension):
-        return self.matrix[: ,: ,dimension]
-
-
-
-
+            self.matrix[:, :, i] = self.normalize_matrix(self.normalization[i], i)
+    def get_dimension(self, dim):
+        return self.matrix[:,:,dim]

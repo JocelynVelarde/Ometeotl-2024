@@ -1,6 +1,9 @@
 import random
 import json
+import numpy as np
 from datetime import datetime, timedelta
+import numpy as np
+import matplotlib.pyplot as plt
 
 from digitalTwin import Twin
 
@@ -51,7 +54,6 @@ class Example:
 
 
     def time_analysis(self):
-
         for i in range(self.days):
             day_coordinates = self.farm.get_random_coordinates()
             random_entries = [self.generate_random_data(day_coordinates) for _ in range(self.day_entries)]
@@ -59,20 +61,12 @@ class Example:
                 self.farm.run_analysis(entry)
             self.farm.average_values()
 
+    def print(self, dim):
+        plt.imshow(self.farm.matrix[:,:,dim], cmap='hot', interpolation='nearest')
+        plt.colorbar()
+        plt.title('Heatmap')
+        plt.show()
 
 
 
-"""
-
-
-e = Example(30, 10)
-e.time_analysis()
-print(e.farm.get_dimension(0))
-
-#//this is for the logs that shall be passed to the LLM
-print(e.farm.ilness_log)
-print(e.farm.pest_log)
-
-
-"""
 

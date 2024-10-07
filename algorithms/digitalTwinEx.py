@@ -1,8 +1,7 @@
 import random
 import json
 from datetime import datetime, timedelta
-from digitalTwin import Twin
-
+from algorithms.digitalTwin import Twin
 
 class Example:
 
@@ -74,6 +73,10 @@ print(e.farm.pest_log)
 
 
 """
-e = Example(30, 10)
+""" e = Example(30, 10)
 e.time_analysis()
-print(e.farm.get_dimension(0))
+
+
+with open('data.txt', 'w') as f:
+    f.write(str(e.farm.get_dimension(0).tolist()))
+ """

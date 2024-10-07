@@ -1,6 +1,6 @@
 import streamlit as st
 import matplotlib.pyplot as plt
-
+from algorithms.digitalTwinEx import *
 
 st.set_page_config(
     page_title="Crop Connect",
@@ -16,16 +16,37 @@ st.write('This page allows you to view the different coordinates and location on
 
 st.divider()
 
-rows = st.number_input('Select height of your farm (m)', min_value=1, step=1)
-columns = st.number_input('Select width of your farm (m)', min_value=1, step=1)
+#dimension = st.number_input('Select the dimension of your farm (m)', min_value=1, max_value= 5, step=1) - 1
 
-if st.button('Generate farm'):
-    st.success('Farm generated successfully!')
+e = Example(30, 10)
+e.time_analysis()
 
-    # Generate the grid
-    for row in range(int(rows)):
-        cols = st.columns(int(columns))
-        for col_index, col in enumerate(cols):
-            with col:
-                if st.button("🌾", key=f"{row}-{col_index}"):
-                    st.write(f"Clicked on cell ({row+1}, {col_index+1})")
+st.write("(1) Ripeness, (2) Weed number, (3) Healthy plant number, (4) Water level, (5) Leaf type count")
+dimension = st.slider('Select the dimension of your farm. ', min_value=1, max_value=5, step=1) - 1
+
+
+matrix = e.farm.get_dimension(dimension=dimension).tolist()
+
+
+for i in range(10):
+    cols = st.columns(20)
+    if dimension == 1:
+        print(f'{i}: {matrix[i]}')
+    for col_index, col in enumerate(cols):
+        with col:
+            if dimension == 0:
+                    
+                if matrix[i][col_index] <= 0:
+                    st.write("🔵")
+                elif matrix[i][col_index] > 0 and matrix[i][col_index] <= 1.5:
+                    st.write("🟢")
+                elif matrix[i][col_index] > 1.5:
+                    st.write("🔴")
+            elif dimension == 1:
+                st.write(int(matrix[i][col_index]))
+    
+    st.divider()
+
+st.write('🔵 - Healthy plants'
+         '\n🟢 - Healthy plants'
+         '\n🔴 - Weed')

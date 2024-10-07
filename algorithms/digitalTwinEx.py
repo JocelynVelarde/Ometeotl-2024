@@ -47,7 +47,6 @@ class Example:
             }
         }
 
-
     def time_analysis(self):
 
         for i in range(self.days):
@@ -57,26 +56,3 @@ class Example:
                 self.farm.run_analysis(entry)
             self.farm.average_values()
 
-
-
-
-"""
-
-
-e = Example(30, 10)
-e.time_analysis()
-print(e.farm.get_dimension(0))
-
-#//this is for the logs that shall be passed to the LLM
-print(e.farm.ilness_log)
-print(e.farm.pest_log)
-
-
-"""
-""" e = Example(30, 10)
-e.time_analysis()
-
-
-with open('data.txt', 'w') as f:
-    f.write(str(e.farm.get_dimension(0).tolist()))
- """

@@ -11,3 +11,4 @@ vision
 *.env
 test_imgs/
 /env
+env/creds.py

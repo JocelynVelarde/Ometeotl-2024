@@ -41,7 +41,7 @@ if prompt := st.chat_input("Type your message here..."):
         st.session_state.messages.append({"role": "assistant", "content": analysis_result})
         st.chat_message("assistant").write(analysis_result)
     else:
-        gpt_response = get_gpt_prompt_response(prompt)
+        gpt_response = get_gpt_prompt_response(prompt, system_message="You are an AI assistant helping a farmer with their crops")
 
         st.session_state.messages.append({"role": "assistant", "content": gpt_response})
         st.chat_message("assistant").write(gpt_response)

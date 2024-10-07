@@ -32,9 +32,9 @@ try:
         data_array = df.values.tolist()
         insert_value = data_array[-1]
         print("Latest entry:", insert_value)
-        insert_value.append(random.uniform(0.0,1.0))
-        insert_value.append(random.uniform(0.0,320.0))
-        insert_value.append(random.uniform(0.0,320.0))
+        insert_value.append(random.uniform(0.0,0.986))
+        insert_value.append(random.uniform(0.0,325.0))
+        insert_value.append(random.uniform(0.0,301.0))
         print(insert_value)
         load_model = pickle.load(open("Modelo_Pred_LeafWetness.pkl","rb"))
         topred_array= [insert_value]
